@@ -6,19 +6,23 @@ public class Player {
     private int numArrows; 
     private boolean playerLife;
     private int playerPos;
+    private ArrayList<Integer> emptyRooms; 
+    private Map<Integer, List<Integer>> caves;
+
 
  
     //constructor 
-    public Player(int numArrows, boolean playerLife, int playerPos) {
+    public Player(int numArrows, boolean playerLife, int playerPos,ArrayList<Integer> emptyRooms, Map<Integer, List<Integer>> caves) {
         this.numArrows = NUM_ARROWS;
         this.playerLife = true;
+        this.emptyRooms = new ArrayList<>();
+        this.caves = new HashMap<>() {
+        };
         
     }
 
-
     public void initialise() {
         //creating a list of all the empty rooms, the list will update as the game goes 
-        ArrayList<Integer> emptyRooms = new ArrayList<>();
         for (int i=1; i < 21; i++) {
             emptyRooms.add(i); 
         }
@@ -29,7 +33,6 @@ public class Player {
         Arrays.asList(3,11,13), Arrays.asList(12,14,20), Arrays.asList(4,13,15), Arrays.asList(6,14,16), Arrays.asList(15,17,20), Arrays.asList(7,16,18), 
         Arrays.asList(9,17,19), Arrays.asList(11,18,20), Arrays.asList(13,16,19));
 
-        Map<Integer, List<Integer>> caves = new HashMap<>();
         for (int i = 0; i < 20; i++) {
             caves.put(i+1, neighbourCaves.get(i));
         }
