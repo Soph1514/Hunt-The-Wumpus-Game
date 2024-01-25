@@ -1,3 +1,16 @@
+import java.util.ArrayList;
 public class Bats {
-    //attributes
+
+    //fields
+    private ArrayList<Integer> batsLocation;
+
+    //methods
+    public ArrayList<Integer> getBatsLocation() {
+        return batsLocation;
+    }
+
+    public void setBatsLocation(ArrayList<Integer> batsLocation) {
+        this.batsLocation = batsLocation;
+    } 
 }
+

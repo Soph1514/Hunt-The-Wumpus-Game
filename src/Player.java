@@ -12,7 +12,7 @@ public class Player {
 
  
     //constructor 
-    public Player(int numArrows, boolean playerLife, int playerPos,ArrayList<Integer> emptyRooms, Map<Integer, List<Integer>> caves) {
+    public Player() {
         this.numArrows = NUM_ARROWS;
         this.playerLife = true;
         this.emptyRooms = new ArrayList<>();
@@ -44,6 +44,7 @@ public class Player {
         System.out.println();
 
         //calling methods for random allocation of the hazards 
+
     }
 
 }
