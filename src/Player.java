@@ -8,7 +8,7 @@ public class Player {
     private int playerPos;
     private ArrayList<Integer> emptyRooms; 
     private Map<Integer, List<Integer>> caves;
-
+    private Set<Integer> notEmptyRooms = new LinkedHashSet();
 
  
     //constructor 
@@ -22,6 +22,12 @@ public class Player {
     }
 
     public void initialise() {
+        //creating objects
+        Bats bats = new Bats();
+        Pit pit = new Pit();
+        Wumpus wumpus = new Wumpus();
+
+
         //creating a list of all the empty rooms, the list will update as the game goes 
         for (int i=1; i < 21; i++) {
             emptyRooms.add(i); 
@@ -43,7 +49,33 @@ public class Player {
         //printing out instructions 
         System.out.println();
 
+
         //calling methods for random allocation of the hazards 
+        //generate 6 rooms from 20
+        Random random = new Random();
+        while (notEmptyRooms.size() < 6){
+            Integer num = random.nextInt(21);
+            if(num > 0){
+                notEmptyRooms.add(num);
+            }
+        }
+
+        //asign each room to an entity(player, pit, wumpus, bats)
+        List<Integer> tempList = new ArrayList<>(notEmptyRooms);
+        pit.setPitLocation(tempList.get(0));
+        wumpus.setWumpusLocation(tempList.get(1));
+        playerPos = tempList.get(2);
+        ArrayList<Integer> batsLocationTemp = new ArrayList<>();
+        batsLocationTemp.add(tempList.get(3));
+        batsLocationTemp.add(tempList.get(4));
+        batsLocationTemp.add(tempList.get(5));
+        bats.setBatsLocation(batsLocationTemp);
+
+        System.out.println(playerPos + " " + pit.getPitLocation() + " " + wumpus.getWumpusLocation() + " " + bats.getBatsLocation());
+
+        //removes those 6 rooms from emptyRooms
+        emptyRooms.removeAll(notEmptyRooms);
+        System.out.println(emptyRooms);
 
     }
 

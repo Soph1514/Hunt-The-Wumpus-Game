@@ -3,6 +3,10 @@ public class Wumpus {
     private boolean wumpusLife = true;
     private int wumpusLocation;
  
+    public Wumpus() {
+        this.wumpusLocation = wumpusLocation;
+    }
+
     //methods 
     public boolean getWumpusLife() {
         return wumpusLife;
