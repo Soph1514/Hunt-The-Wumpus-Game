@@ -4,9 +4,7 @@ public class Bats {
     //fields
     private ArrayList<Integer> batsLocation;
 
-    public Bats() {
-        this.batsLocation = batsLocation;
-    }
+    public Bats() {}
 
     //methods
     public ArrayList<Integer> getBatsLocation() {

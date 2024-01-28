@@ -2,9 +2,7 @@ public class Pit {
     //fields 
     private int pitLocation;
 
-    public Pit() {
-        this.pitLocation = pitLocation;
-    }
+    public Pit() {}
 
     //methods
     public int getPitLocation() {

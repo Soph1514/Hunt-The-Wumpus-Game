@@ -1,33 +1,33 @@
 import java.util.*;
 
-public class Player {
+public class Player extends Messages{
     //attributes 
     private static final int NUM_ARROWS = 5;
     private int numArrows; 
     private boolean playerLife;
     private int playerPos;
-    private ArrayList<Integer> emptyRooms; 
-    private Map<Integer, List<Integer>> caves;
-    private Set<Integer> notEmptyRooms = new LinkedHashSet();
 
- 
+    private ArrayList<Integer> emptyRooms; //all the rooms that will be empty after random allocation of hazards
+    private Map<Integer, List<Integer>> roomMap; //store all the rooms and their according neighbouring rooms 
+    private Set<Integer> notEmptyRooms; //will store the rooms that the hazards are located in 
+
+    private Bats bats;
+    private Pit pit;
+    private Wumpus wumpus;
+
     //constructor 
     public Player() {
         this.numArrows = NUM_ARROWS;
         this.playerLife = true;
-        this.emptyRooms = new ArrayList<>();
-        this.caves = new HashMap<>() {
-        };
-        
+        this.emptyRooms = new ArrayList<>(); 
+        this.roomMap = new HashMap<>(); 
+        this.notEmptyRooms = new LinkedHashSet<>();
+        this.bats = new Bats(); 
+        this.pit = new Pit();
+        this.wumpus = new Wumpus();
     }
 
     public void initialise() {
-        //creating objects
-        Bats bats = new Bats();
-        Pit pit = new Pit();
-        Wumpus wumpus = new Wumpus();
-
-
         //creating a list of all the empty rooms, the list will update as the game goes 
         for (int i=1; i < 21; i++) {
             emptyRooms.add(i); 
@@ -40,15 +40,10 @@ public class Player {
         Arrays.asList(9,17,19), Arrays.asList(11,18,20), Arrays.asList(13,16,19));
 
         for (int i = 0; i < 20; i++) {
-            caves.put(i+1, neighbourCaves.get(i));
+            roomMap.put(i+1, neighbourCaves.get(i));
         }
 
-        //caves.forEach((k,v) -> System.out.println(k + " " + v));
-                                                                                                                                                                                                                                                                                                                                                                                                                              
-        
-        //printing out instructions 
-        System.out.println();
-
+        //caves.forEach((k,v) -> System.out.println(k + " " + v));                                                                                                                                                                                                                                                                                                                                                                                                                              
 
         //calling methods for random allocation of the hazards 
         //generate 6 rooms from 20
@@ -78,5 +73,54 @@ public class Player {
         System.out.println(emptyRooms);
 
     }
+
+    //method to move the player from one room to another 
+    public void move(int room) {
+        //walked into a room with wumpus
+        if (wumpus.getWumpusLocation() == room) {
+            gotEaten();
+            playerLife = false;
+        }
+        else {
+            //walked into a room with a bottomless pit
+            if (pit.getPitLocation() == room ) {
+                fellIntoPit();
+                playerLife = false;
+            }
+            //walked into a room with bats, statement checks if the room the user inputed is in the list of rooms the bats are located in
+            if (bats.getBatsLocation().contains(room)) {
+                Random random = new Random();
+                // inspired by https://www.baeldung.com/java-random-list-element
+                int newRoom = emptyRooms.get(random.nextInt(emptyRooms.size()));
+                playerPos = newRoom;
+                pickedUpByBats();
+
+            }
+            //walked into an empty room
+            else {
+                System.out.println("YOU ARE IN THE ROOM:" + playerPos + "\n" + "THE TUNNELS LEED TO ROOMS:" + roomMap.get(playerPos));
+            }
+        }
+    }
+
+
+    public void nearHazards(int room) {
+        List<Integer> neighbourRooms = roomMap.get(room);
+        //checking if the wumpus is in one of the neighbouring rooms
+        if (neighbourRooms.contains(wumpus.getWumpusLocation())) {
+            wumpusNearby();
+        }
+        //checking if the pit is in one of the neighbouring rooms
+        if (neighbourRooms.contains(pit.getPitLocation())) {
+            pitNearby();
+        }
+    }
+
+
+    public void printPlayerLocation() {
+        System.out.println("YOU ARE IN THE ROOM: " + playerPos + "THE TUNNELS LEED TO ROOMS:" + roomMap.get(playerPos));
+    }
+
+
 
 }
