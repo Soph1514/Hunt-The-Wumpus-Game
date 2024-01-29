@@ -5,10 +5,10 @@ public class Player extends Messages{
     private static final int NUM_ARROWS = 5;
     private int numArrows; 
     private boolean playerLife;
-    private int playerPos;
+    private int playerLocation;
 
     private ArrayList<Integer> emptyRooms; //all the rooms that will be empty after random allocation of hazards
-    private Map<Integer, List<Integer>> roomMap; //store all the rooms and their according neighbouring rooms 
+    public Map<Integer, List<Integer>> roomMap; //store all the rooms and their according neighbouring rooms 
     private Set<Integer> notEmptyRooms; //will store the rooms that the hazards are located in 
 
     private Bats bats;
@@ -25,6 +25,18 @@ public class Player extends Messages{
         this.bats = new Bats(); 
         this.pit = new Pit();
         this.wumpus = new Wumpus();
+    }
+
+    public void setPlayerLocation(int room) {
+        this.playerLocation = room;
+    }
+
+    public int getPlayerLocation() {
+        return this.playerLocation;
+    }
+
+    public boolean getPlayerLife() {
+        return this.playerLife;
     }
 
     public void initialise() {
@@ -59,14 +71,14 @@ public class Player extends Messages{
         List<Integer> tempList = new ArrayList<>(notEmptyRooms);
         pit.setPitLocation(tempList.get(0));
         wumpus.setWumpusLocation(tempList.get(1));
-        playerPos = tempList.get(2);
+        playerLocation = tempList.get(2);
         ArrayList<Integer> batsLocationTemp = new ArrayList<>();
         batsLocationTemp.add(tempList.get(3));
         batsLocationTemp.add(tempList.get(4));
         batsLocationTemp.add(tempList.get(5));
         bats.setBatsLocation(batsLocationTemp);
 
-        System.out.println(playerPos + " " + pit.getPitLocation() + " " + wumpus.getWumpusLocation() + " " + bats.getBatsLocation());
+        System.out.println(playerLocation + " " + pit.getPitLocation() + " " + wumpus.getWumpusLocation() + " " + bats.getBatsLocation());
 
         //removes those 6 rooms from emptyRooms
         emptyRooms.removeAll(notEmptyRooms);
@@ -92,14 +104,16 @@ public class Player extends Messages{
                 Random random = new Random();
                 // inspired by https://www.baeldung.com/java-random-list-element
                 int newRoom = emptyRooms.get(random.nextInt(emptyRooms.size()));
-                playerPos = newRoom;
+                playerLocation = newRoom;
                 pickedUpByBats();
+                printPlayerLocation();
 
             }
-            //walked into an empty room
             else {
-                System.out.println("YOU ARE IN THE ROOM:" + playerPos + "\n" + "THE TUNNELS LEED TO ROOMS:" + roomMap.get(playerPos));
+                //if walked into an empty room
+                playerLocation = room;
             }
+            
         }
     }
 
@@ -114,11 +128,16 @@ public class Player extends Messages{
         if (neighbourRooms.contains(pit.getPitLocation())) {
             pitNearby();
         }
+        //checking if bats are in neighbouring rooms
+        //method disjoint returns false of there is at least one common element in two lists
+        if (!Collections.disjoint(neighbourRooms, bats.getBatsLocation())) {
+            batsNearby();
+        }
     }
 
 
     public void printPlayerLocation() {
-        System.out.println("YOU ARE IN THE ROOM: " + playerPos + "THE TUNNELS LEED TO ROOMS:" + roomMap.get(playerPos));
+        System.out.println("YOU ARE IN THE ROOM: " + playerLocation + ", THE TUNNELS LEED TO ROOMS:" + roomMap.get(playerLocation));
     }
 
 

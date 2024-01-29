@@ -5,7 +5,7 @@ public class Messages {
     }
 
     public static void fellIntoPit() {
-        System.out.println("AAHHHHHH... YOU FELL INTO A PIT! BETTER LUCK NEXT TIME" );
+        System.out.println("AAHHHHHH... YOU FELL INTO A PIT! BETTER LUCK NEXT TIME HEHE" );
     }
 
     public static void pickedUpByBats() {
@@ -18,6 +18,14 @@ public class Messages {
 
     public static void pitNearby() {
         System.out.println("YOU FEEL A DRAFT");
+    }
+
+    public static void batsNearby() {
+        System.out.println("YOU HEAR A RUSTLING");
+    }
+
+    public void printInstructions() {
+        System.out.println("Play");
     }
 
 }
