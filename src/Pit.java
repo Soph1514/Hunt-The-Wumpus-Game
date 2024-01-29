@@ -2,8 +2,6 @@ public class Pit {
     //fields 
     private int pitLocation;
 
-    public Pit() {}
-
     //methods
     public int getPitLocation() {
         return pitLocation;

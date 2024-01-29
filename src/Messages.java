@@ -24,8 +24,4 @@ public class Messages {
         System.out.println("YOU HEAR A RUSTLING");
     }
 
-    public void printInstructions() {
-        System.out.println("Play");
-    }
-
 }

@@ -5,7 +5,6 @@ public class Wumpus {
     private boolean wumpusLife = true;
     private int wumpusLocation;
  
-    public Wumpus() {}
 
     //methods 
     public boolean getWumpusLife() {
