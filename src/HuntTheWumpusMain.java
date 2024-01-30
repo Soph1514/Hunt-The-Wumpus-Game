@@ -24,7 +24,10 @@ public class HuntTheWumpusMain {
                         player.move(room);
                         player.nearHazards(room);
                         break;
-                
+
+                    case "SHOOT":
+                        player.shoot(room);
+                        break;
                 }
             }
             catch (Exception e) {
