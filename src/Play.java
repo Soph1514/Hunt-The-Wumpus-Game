@@ -142,6 +142,29 @@ public class Play extends Hazards{
         }
     }
 
+    public void shoot(int userInput){//user decides what room to shoot into.
+        int arrowLocation = userInput;
+        int wumpusLocation = wumpus.getWumpusLocation();
+
+        //condition where user can only shoot into connected rooms -> in the main
+
+        //you killed the wumpus -> you win. you run out of arrows -> you lose.
+        if(numArrows > 0){
+            numArrows--;
+            //you win
+            if(arrowLocation == wumpusLocation){
+                youWin();
+                playerLife = false; //exit the game
+            } else {
+                System.out.println("YOU MISSED!");
+            }
+            if(numArrows == 0){
+                youLost();
+                playerLife = false; //exit the game
+            }
+        }
+    }
+
     public void printPlayerLocation() {
         System.out.println("YOU ARE IN THE ROOM: " + playerLocation+ ", THE TUNNELS LEED TO ROOMS:" + roomMap.get(playerLocation));
     }
