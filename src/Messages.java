@@ -24,4 +24,12 @@ public class Messages {
         System.out.println("YOU HEAR A RUSTLING");
     }
 
+    public static void youWin() {
+        System.out.println("CONGRATULATIONS! YOU KILLED THE WUMPUS! YOU WIN.");
+    }
+
+    public static void youLost() {
+        System.out.println("OH NO! YOU RAN OUT OF ARROWS! YOU LOSE");
+    }
+
 }
