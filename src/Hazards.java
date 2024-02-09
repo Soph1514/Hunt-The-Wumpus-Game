@@ -1,11 +1,11 @@
 import java.util.ArrayList;
-
-public class Hazards extends Messages{
+public class Hazards {
      
     //fields
     private ArrayList<Integer> batsLocation; //a list of 3 rooms where bats are located 
     private int pitLocation;
     private int wumpusLocation;
+    
 
     //methods for the pit
     public int getPitLocation() {

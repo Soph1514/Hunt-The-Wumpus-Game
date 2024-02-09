@@ -1,14 +1,5 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-public class Play extends Hazards{
+import java.util.*;
+public class Play extends Messages{
 
     //fields
     private static final int NUM_ARROWS = 5;
@@ -19,6 +10,7 @@ public class Play extends Hazards{
     private ArrayList<Integer> emptyRooms = new ArrayList<>(); //all the rooms that will be empty after random allocation of hazards
     public Map<Integer, List<Integer>> roomMap = new HashMap<>();; //store all the rooms and their according neighbouring rooms 
     private Set<Integer> notEmptyRooms = new LinkedHashSet<>();; //will store the rooms that the hazards are located in 
+    
 
         //methods for the player
     
@@ -70,6 +62,8 @@ public class Play extends Hazards{
 
         //removes those 6 rooms from emptyRooms
         emptyRooms.removeAll(notEmptyRooms); 
+
+        System.out.println(roomMap.entrySet());
     }
 
     //method to move the player from one room to another 
@@ -149,13 +143,13 @@ public class Play extends Hazards{
 
     public void printInstructions() {
         System.out.print("YOU ARE A FAMOUS HUNTER DESCENDING DOWN INTO THE CAVES OF DARKNESS, LAIR OF THE INFAMOUS MAN-EATING WUMPUS. \n" 
-        + "YOU ARE EQUIPPED WITH 5 ARROWS, AND ALL YOUR SENSES. THERE ARE 20 ROOMS CONNECTED BY TUNNELS, YOU CAN ONLY MOVE OR SHOOT INTO THE NEIGHBOURING ROOMS \n"
+        + "YOU ARE EQUIPPED WITH 5 ARROWS, AND ALL YOUR SENSES. THERE ARE 20 ROOMS CONNECTED BY TUNNELS, YOU CAN ONLY MOVE OR SHOOT INTO NEIGHBOURING ROOMS. \n\n"
         + "HAZARDS (YOU CAN SENSE THEM FROM ONE ROOM AWAY): \n\n"
-        + "A) 1 PIT, WHICH IS BOTTOMLESS AND FATAL TO FALL INTO \n" + "B) 3 SUPER-BATS, THAT WILL PICK YOU UP AND DROP YOU IN SOME RANDOM ROOM IN THE NETWORK. \n" 
-        + "C) THE WUMPUS ITSLEF. THE WUMPUS HAS A CHANCE OF MOVING INTO ANOTHER ROOM OF 0.75 PER EVERY 7 COMMANDS YOU MAKE. \nIF YOU BLUNDER INTO THE SAME ROOM AS THE WUMPUS, YOU LOSE...\n\n"
-        + "YOU CAN SMELL THE WUMPUS, IF YOU HEAR RUSTLING THIS MEANS THE BATS ARE NEABY AND IF YOU FEEL A DRAFT, A PIT IS NEARBY.\n"
-        + "THE TWO COMMANDS YOU CAN USE ARE 'MOVE' OR 'SHOOT'. AFTER TYPING THE COMMAND SPECIFY THE ROOM, E.G SHOOT7. \nIF YOU WANT TO TERMINATE THE hazard TYPE 'QUIT'.\n\n" 
-        + "YOUR GOAL IS TO SHOOT THE WUMPUS BEFORE SOMETHING TERRIBLE HAPPENS TO YOU. GOOD LUCK HUNTING! \n");
+        + "A) 1 PIT, WHICH FATAL TO FALL INTO. YOU WILL FEEL A DRAFT IF YOU ARE NEAR IT\n" + "B) 3 SUPER-BATS, THAT WILL PICK YOU UP AND DROP YOU IN SOME RANDOM ROOM IN THE NETWORK. YOU WILL HEAR RUSTLING NEAR THEM. \n" 
+        + "C) THE WUMPUS ITSLEF, WHICH HAS A TERRIBLE SMELL. THE WUMPUS HAS A CHANCE OF MOVING INTO ANOTHER ROOM OF 0.75 PER EVERY 7 COMMANDS YOU MAKE. \nIF YOU BLUNDER INTO THE SAME ROOM AS THE WUMPUS, YOU LOSE...\n\n"
+        + "COMMANDS: \n1) 'SHOOT', PLEASE SPECIFY A ROOM, E.G SHOOT7. \n"
+        + "2) 'MOVE', PLEASE SPECIFY A ROOM, E.G MOVE7. \n3) 'MAP' TO DISPLAY A VISUAL REPRESENTATION OF THE CAVE SYSTEM. \n4) 'QUIT' TO TERMINATE THE GAME \n\n"  
+        + "YOUR GOAL IS TO SHOOT THE WUMPUS BEFORE SOMETHING TERRIBLE HAPPENS TO YOU. GOOD LUCK HUNTING! \n\n");
     }
 }
 
