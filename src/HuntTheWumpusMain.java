@@ -4,17 +4,18 @@ import java.util.Scanner;
 public class HuntTheWumpusMain {
     private static Scanner reader = new Scanner (System.in);
     public static void main (String[] args) {
+        //infinite game loop
+        while(true) {
         Play play = new Play();
-        GUI gui = new GUI();
         String line = "default";
         play.printInstructions();
         play.initialise();
+        GUI gui = new GUI(play.getPlayerLocation());;
 
-        
-        
-
+        //loop for each game
         while (play.getPlayerLife()) {
             play.printPlayerLocation();
+            gui.setplayerRoom(play.getPlayerLocation());
             //checking if the player can "sense" any hazards in the neighbouring rooms
             play.nearHazards(play.getPlayerLocation());
             try { 
@@ -23,6 +24,7 @@ public class HuntTheWumpusMain {
                 String command = line.replaceAll("[0-9]", "");
             
                 switch (command) {
+                    //will display the visual representation of the cave network and point where the player is
                     case "MAP":
                     JFrame f = new JFrame();
                     f.setSize(700, 650);
@@ -51,9 +53,21 @@ public class HuntTheWumpusMain {
                         }
                         break;
                     case "QUIT":
+                    //exit out of the loop
                         return;
                     default:
                         throw new Exception ("INVALID COMMAND, PLEASE TRY AGAIN");
+                }
+                if (!play.getPlayerLife()) {
+                    System.out.println("PLAY AGAIN? Y/N");
+                    switch(reader.nextLine()) {
+                        case "Y":
+                        //breaks out of the inner loop but not the outer to restart the game
+                           break;
+                        case "N":
+                        //terminate the game
+                            return;
+                    }
                 }
             }
             catch (Exception e) {
@@ -61,5 +75,7 @@ public class HuntTheWumpusMain {
             }
 
         }
+
+       }
     }
 }

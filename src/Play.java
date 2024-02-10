@@ -13,7 +13,6 @@ public class Play extends Messages{
     
 
         //methods for the player
-    
         public int getPlayerLocation() {
             return this.playerLocation;
         }
@@ -21,6 +20,11 @@ public class Play extends Messages{
         public boolean getPlayerLife() {
             return this.playerLife;
         }
+
+        public void setPlayerLife(boolean b) {
+            this.playerLife = b;
+        }
+
      
 
     public void initialise() {
@@ -62,8 +66,6 @@ public class Play extends Messages{
 
         //removes those 6 rooms from emptyRooms
         emptyRooms.removeAll(notEmptyRooms); 
-
-        System.out.println(roomMap.entrySet());
     }
 
     //method to move the player from one room to another 
