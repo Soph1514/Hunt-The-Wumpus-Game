@@ -4,15 +4,19 @@ public class Play extends Messages{
     //fields
     private static final int NUM_ARROWS = 5;
     private int numArrows = NUM_ARROWS; 
+    private int extraArrows = 3;
     private boolean playerLife = true;
     private int playerLocation;
     private Hazards hazard = new Hazards();
-    private ArrayList<Integer> emptyRooms = new ArrayList<>(); //all the rooms that will be empty after random allocation of hazards
+    private ArrayList<Integer> emptyRooms = new ArrayList<>(); //all the rooms that will be empty after random allocation of hazards AND ARROWS
     public Map<Integer, List<Integer>> roomMap = new HashMap<>();; //store all the rooms and their according neighbouring rooms 
     private Set<Integer> notEmptyRooms = new LinkedHashSet<>();; //will store the rooms that the hazards are located in 
+    private Set<Integer> roomsWithArrow = new LinkedHashSet<>();//ensure that no more than 1 arrow is in a room
+
     
 
         //methods for the player
+    
         public int getPlayerLocation() {
             return this.playerLocation;
         }
@@ -21,10 +25,9 @@ public class Play extends Messages{
             return this.playerLife;
         }
 
-        public void setPlayerLife(boolean b) {
-            this.playerLife = b;
+        public int getArrows(){
+            return this.numArrows;
         }
-
      
 
     public void initialise() {
@@ -66,10 +69,18 @@ public class Play extends Messages{
 
         //removes those 6 rooms from emptyRooms
         emptyRooms.removeAll(notEmptyRooms); 
+
+        //call resupply
+        resupply();
+
+        System.out.println("rooms with arrows "+roomsWithArrow);
+
+        System.out.println(roomMap.entrySet());
     }
 
     //method to move the player from one room to another 
     public void move(int room) {
+
         //walked into a room with wumpus
         if (hazard.getWumpusLocation() == room) {
             gotEaten();
@@ -95,6 +106,13 @@ public class Play extends Messages{
                 //if walked into an empty room
                 playerLocation = room;
             }
+        }
+        if(roomsWithArrow.contains(playerLocation)){
+            System.out.println("YOU FOUND AN ARROW");
+            roomsWithArrow.remove(playerLocation);//take away arrow from room
+            emptyRooms.add(playerLocation);//room is now empty again
+            extraArrows--;//take away one extra arrow
+            numArrows++;
         }
     }
 
@@ -131,10 +149,38 @@ public class Play extends Messages{
                 playerLife = false; //exit the game
             } else {
                 System.out.println("YOU MISSED!");
+                //wumpus has a 75% chance of hearing the arrow and moving to a new room
+                //System.out.println(hazard.getWumpusLocation());
+                Random random = new Random();
+                if(random.nextDouble() < 0.75){
+                    int index = random.nextInt(emptyRooms.size()-5);
+                    int num = emptyRooms.get(index);
+                    hazard.setWumpusLocation(num);
+                    System.out.println("TINK! THE WUMPUS HEARD THE ARROW AND ESCAPED TO A NEW RANDOM ROOM.");
+                }
+                //System.out.println(hazard.getWumpusLocation());
             }
-            if(numArrows == 0){
-                youLost();
-                playerLife = false; //exit the game
+        }
+
+        if(numArrows == 0 && extraArrows != 0){
+            System.out.println("YOU HAVE RUN OUT OF ARROWS BUT CAN PICK UP ARROWS LEFT BEHIND BY FALLEN HUNTERS. THERE ARE " + extraArrows + " IN THE CAVE SYSTEM FOR YOU TO FIND.");
+        }
+        if(numArrows == 0 && extraArrows == 0 && arrowLocation != wumpusLocation){//player can wander and collect arrows
+            youLost();
+            playerLife = false; //exit the game
+        }
+    }
+
+    //function for 
+    public void resupply(){
+        //allocates the random arrows
+        Random random = new Random();
+        while(roomsWithArrow.size() < extraArrows){
+            int index = random.nextInt(emptyRooms.size()-5);//random number from emptyRooms()
+            int num = emptyRooms.get(index);
+            if(num != 0){
+                emptyRooms.remove(num);//room is not empty as it now has an arrow
+                roomsWithArrow.add(num);
             }
         }
     }
@@ -148,13 +194,9 @@ public class Play extends Messages{
         + "YOU ARE EQUIPPED WITH 5 ARROWS, AND ALL YOUR SENSES. THERE ARE 20 ROOMS CONNECTED BY TUNNELS, YOU CAN ONLY MOVE OR SHOOT INTO NEIGHBOURING ROOMS. \n\n"
         + "HAZARDS (YOU CAN SENSE THEM FROM ONE ROOM AWAY): \n\n"
         + "A) 1 PIT, WHICH FATAL TO FALL INTO. YOU WILL FEEL A DRAFT IF YOU ARE NEAR IT\n" + "B) 3 SUPER-BATS, THAT WILL PICK YOU UP AND DROP YOU IN SOME RANDOM ROOM IN THE NETWORK. YOU WILL HEAR RUSTLING NEAR THEM. \n" 
-        + "C) THE WUMPUS ITSLEF, WHICH HAS A TERRIBLE SMELL. THE WUMPUS HAS A CHANCE OF MOVING INTO ANOTHER ROOM OF 0.75 PER EVERY 7 COMMANDS YOU MAKE. \nIF YOU BLUNDER INTO THE SAME ROOM AS THE WUMPUS, YOU LOSE...\n\n"
+        + "C) THE WUMPUS ITSLEF, WHICH HAS A TERRIBLE SMELL. THE WUMPUS HAS A CHANCE OF MOVING INTO ANOTHER RANDOM ROOM OF 0.75 AFTER EVERY MISS. \nIF YOU BLUNDER INTO THE SAME ROOM AS THE WUMPUS, YOU LOSE...\n\n"
         + "COMMANDS: \n1) 'SHOOT', PLEASE SPECIFY A ROOM, E.G SHOOT7. \n"
         + "2) 'MOVE', PLEASE SPECIFY A ROOM, E.G MOVE7. \n3) 'MAP' TO DISPLAY A VISUAL REPRESENTATION OF THE CAVE SYSTEM. \n4) 'QUIT' TO TERMINATE THE GAME \n\n"  
         + "YOUR GOAL IS TO SHOOT THE WUMPUS BEFORE SOMETHING TERRIBLE HAPPENS TO YOU. GOOD LUCK HUNTING! \n\n");
     }
 }
-
-
-
-
