@@ -6,7 +6,6 @@ public class Hazards {
     private int pitLocation;
     private int wumpusLocation;
     
-
     //methods for the pit
     public int getPitLocation() {
          return pitLocation;

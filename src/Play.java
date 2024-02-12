@@ -10,10 +10,8 @@ public class Play {
     private Hazards hazard = new Hazards();
     private ArrayList<Integer> emptyRooms = new ArrayList<>(); //all the rooms that will be empty after random allocation of hazards AND ARROWS
     public Map<Integer, List<Integer>> roomMap = new HashMap<>();; //store all the rooms and their according neighbouring rooms 
-    private Set<Integer> notEmptyRooms = new LinkedHashSet<>();; //will store the rooms that the hazards are located in 
-    private Set<Integer> roomsWithArrow = new LinkedHashSet<>();//ensure that no more than 1 arrow is in a room
-
-    
+    private Set<Integer> notEmptyRooms = new HashSet<>();; //will store the rooms that the hazards are located in 
+    private Set<Integer> roomsWithArrow = new HashSet<>();//ensure that no more than 1 arrow is in a room
 
         //methods for the player
     
@@ -29,7 +27,6 @@ public class Play {
             return this.numArrows;
         }
      
-
     public void initialise() {
         //creating a list of all the empty rooms, the list will update as the hazard goes 
         for (int i=1; i < 21; i++) {
@@ -68,11 +65,10 @@ public class Play {
         hazard.setBatsLocation(batsLocationTemp);
 
         //removes those 6 rooms from emptyRooms
-        emptyRooms.removeAll(notEmptyRooms); 
+        emptyRooms.removeAll(notEmptyRooms);
 
         //call resupply
         resupply();
-        //System.out.println("rooms with arrows "+roomsWithArrow);
     }
 
     //method to move the player from one room to another 
@@ -112,7 +108,6 @@ public class Play {
             numArrows++;
         }
     }
-
 
     public void nearHazards(int room) {
         List<Integer> neighbourRooms = roomMap.get(room);
@@ -171,12 +166,10 @@ public class Play {
         //allocates the random arrows
         Random random = new Random();
         while(roomsWithArrow.size() < extraArrows){
-            int index = random.nextInt(emptyRooms.size()-5);//random number from emptyRooms()
+            int index = random.nextInt(emptyRooms.size()-1);//random number from emptyRooms()
             int num = emptyRooms.get(index);
-            if(num != 0){
-                emptyRooms.remove(num);//room is not empty as it now has an arrow
+                emptyRooms.remove(index);//room is not empty as it now has an arrow
                 roomsWithArrow.add(num);
-            }
         }
     }
 

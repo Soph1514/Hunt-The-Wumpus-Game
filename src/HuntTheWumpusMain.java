@@ -29,7 +29,6 @@ public class HuntTheWumpusMain {
                     line = reader.nextLine();
                     //stroring the text aspect of user's input in a variable
                     String command = line.replaceAll("[0-9]", "");
-                
                     switch (command) {
                         //will display the visual representation of the cave network, point where the player is now and which rooms the player have already visited 
                         case "MAP":

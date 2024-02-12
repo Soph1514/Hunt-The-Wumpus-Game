@@ -77,7 +77,6 @@ public void drawRooms(Graphics2D g, int playerRoom, HashSet<Integer> visitedRoom
     g.fillOval(rooms[playerRoom-1][0], rooms[playerRoom-1][1], roomSize, roomSize);
 }
 
-
 //x,y coordinates were taken from an online source that match a flat dodecahedron
 private int[][] rooms = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
 {169, 255}, {232, 168}, {334, 136}, {435, 168}, {499, 255}, {499, 361},
