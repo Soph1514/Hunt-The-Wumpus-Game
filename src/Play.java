@@ -1,5 +1,5 @@
 import java.util.*;
-public class Play extends Messages{
+public class Play {
 
     //fields
     private static final int NUM_ARROWS = 5;
@@ -72,10 +72,7 @@ public class Play extends Messages{
 
         //call resupply
         resupply();
-
-        System.out.println("rooms with arrows "+roomsWithArrow);
-
-        System.out.println(roomMap.entrySet());
+        //System.out.println("rooms with arrows "+roomsWithArrow);
     }
 
     //method to move the player from one room to another 
@@ -83,14 +80,14 @@ public class Play extends Messages{
 
         //walked into a room with wumpus
         if (hazard.getWumpusLocation() == room) {
-            gotEaten();
+            System.out.println("YOU LOST! THE WUMPUS ATE YOU! BETTER LUCK NEXT TIME");
             playerLife = false;
             return;
         }
         else {
             //walked into a room with a bottomless pit
             if (hazard.getPitLocation() == room ) {
-                fellIntoPit();
+                System.out.println("AAHHHHHH... YOU FELL INTO A PIT! BETTER LUCK NEXT TIME HEHE" );
                 playerLife = false;
                 return;
             }
@@ -100,7 +97,7 @@ public class Play extends Messages{
                 // inspired by https://www.baeldung.com/java-random-list-element
                 int newRoom = emptyRooms.get(random.nextInt(emptyRooms.size()));
                 playerLocation = newRoom;
-                pickedUpByBats();
+                System.out.println("OH NO! YOU GOT PICKED UP BY BATS AND DROPPED INTO A NEW ROOM");
             }
             else {
                 //if walked into an empty room
@@ -121,16 +118,16 @@ public class Play extends Messages{
         List<Integer> neighbourRooms = roomMap.get(room);
         //checking if the wumpus is in one of the neighbouring rooms
         if (neighbourRooms.contains(hazard.getWumpusLocation())) {
-            wumpusNearby();
+            System.out.println("YOU SMELL SOMETHING TERRIBLE, THE WUMPUS IS NEARBY");
         }
         //checking if the pit is in one of the neighbouring rooms
         if (neighbourRooms.contains(hazard.getPitLocation())) {
-            pitNearby();
+            System.out.println("YOU FEEL A DRAFT");
         }
         //checking if bats are in neighbouring rooms
         //method disjoint returns false of there is at least one common element in two lists
         if (!Collections.disjoint(neighbourRooms, hazard.getBatsLocation())) {
-            batsNearby();
+            System.out.println("YOU HEAR A RUSTLING");
         }
     }
 
@@ -145,12 +142,11 @@ public class Play extends Messages{
             numArrows--;
             //you win
             if(arrowLocation == wumpusLocation){
-                youWin();
+                System.out.println("CONGRATULATIONS! YOU KILLED THE WUMPUS! YOU WIN.");
                 playerLife = false; //exit the game
             } else {
                 System.out.println("YOU MISSED!");
                 //wumpus has a 75% chance of hearing the arrow and moving to a new room
-                //System.out.println(hazard.getWumpusLocation());
                 Random random = new Random();
                 if(random.nextDouble() < 0.75){
                     int index = random.nextInt(emptyRooms.size()-5);
@@ -158,7 +154,6 @@ public class Play extends Messages{
                     hazard.setWumpusLocation(num);
                     System.out.println("TINK! THE WUMPUS HEARD THE ARROW AND ESCAPED TO A NEW RANDOM ROOM.");
                 }
-                //System.out.println(hazard.getWumpusLocation());
             }
         }
 
@@ -166,7 +161,7 @@ public class Play extends Messages{
             System.out.println("YOU HAVE RUN OUT OF ARROWS BUT CAN PICK UP ARROWS LEFT BEHIND BY FALLEN HUNTERS. THERE ARE " + extraArrows + " IN THE CAVE SYSTEM FOR YOU TO FIND.");
         }
         if(numArrows == 0 && extraArrows == 0 && arrowLocation != wumpusLocation){//player can wander and collect arrows
-            youLost();
+            System.out.println("OH NO! YOU RAN OUT OF ARROWS! YOU LOSE");
             playerLife = false; //exit the game
         }
     }
@@ -190,13 +185,13 @@ public class Play extends Messages{
     }
 
     public void printInstructions() {
-        System.out.print("YOU ARE A FAMOUS HUNTER DESCENDING DOWN INTO THE CAVES OF DARKNESS, LAIR OF THE INFAMOUS MAN-EATING WUMPUS. \n" 
+        System.out.print("\nYOU ARE A FAMOUS HUNTER DESCENDING DOWN INTO THE CAVES OF DARKNESS, LAIR OF THE INFAMOUS MAN-EATING WUMPUS. \n" 
         + "YOU ARE EQUIPPED WITH 5 ARROWS, AND ALL YOUR SENSES. THERE ARE 20 ROOMS CONNECTED BY TUNNELS, YOU CAN ONLY MOVE OR SHOOT INTO NEIGHBOURING ROOMS. \n\n"
         + "HAZARDS (YOU CAN SENSE THEM FROM ONE ROOM AWAY): \n\n"
         + "A) 1 PIT, WHICH FATAL TO FALL INTO. YOU WILL FEEL A DRAFT IF YOU ARE NEAR IT\n" + "B) 3 SUPER-BATS, THAT WILL PICK YOU UP AND DROP YOU IN SOME RANDOM ROOM IN THE NETWORK. YOU WILL HEAR RUSTLING NEAR THEM. \n" 
         + "C) THE WUMPUS ITSLEF, WHICH HAS A TERRIBLE SMELL. THE WUMPUS HAS A CHANCE OF MOVING INTO ANOTHER RANDOM ROOM OF 0.75 AFTER EVERY MISS. \nIF YOU BLUNDER INTO THE SAME ROOM AS THE WUMPUS, YOU LOSE...\n\n"
-        + "COMMANDS: \n1) 'SHOOT', PLEASE SPECIFY A ROOM, E.G SHOOT7. \n"
-        + "2) 'MOVE', PLEASE SPECIFY A ROOM, E.G MOVE7. \n3) 'MAP' TO DISPLAY A VISUAL REPRESENTATION OF THE CAVE SYSTEM. \n4) 'QUIT' TO TERMINATE THE GAME \n\n"  
+        + "COMMANDS: \n1) 'SHOOT', PLEASE SPECIFY A ROOM, E.G SHOOT7 \n"
+        + "2) 'MOVE', PLEASE SPECIFY A ROOM, E.G MOVE7 \n3) 'MAP' TO DISPLAY A VISUAL REPRESENTATION OF THE CAVE SYSTEM. THE ROOM YOU ARE IN IS RED AND THE ROOMS THAT YOU HAVE ALREADY VISITED ARE ORANGE \n4) 'AMMO' TO CHECK HOW MANY ARROWS YOU HAVE LEFT \n5) 'QUIT' TO TERMINATE THE GAME \n\n"  
         + "YOUR GOAL IS TO SHOOT THE WUMPUS BEFORE SOMETHING TERRIBLE HAPPENS TO YOU. GOOD LUCK HUNTING! \n\n");
     }
 }
