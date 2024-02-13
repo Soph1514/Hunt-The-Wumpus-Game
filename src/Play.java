@@ -23,6 +23,10 @@ public class Play {
             return this.playerLife;
         }
 
+        public void setPlayerLife(boolean b) {
+            this.playerLife = b;
+        }
+
         public int getArrows(){
             return this.numArrows;
         }
@@ -127,7 +131,7 @@ public class Play {
     }
 
     public void shoot(int room){//user decides what room to shoot into.
-        int arrowLocation = userInput;
+        int arrowLocation = room;
         int wumpusLocation = hazard.getWumpusLocation();
 
         //condition where user can only shoot into connected rooms -> in the main

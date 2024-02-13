@@ -23,3 +23,5 @@ This is a Java console-based game where the player navigates through a network o
 2. Load the src directory folder.
 2. Compile the Java files using `javac *.java`.
 3. Run the game with `java HuntTheWumpusMain`.
+
+Link to the version control repository: https://github.com/Soph1514/Practical1.git
