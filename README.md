@@ -5,7 +5,7 @@ This is a Java console-based game where the player navigates through a network o
 # Brief Overview
 
 1. You are a hunter in a cave system seeking the infamous man-eating Wumpus.
-2. You have 5 arrows and must navigate through 20 interconnected rooms.
+2. You have 5 arrows and must navigate through 20 interconnected rooms. You can pick up 3 extra arrows in the cave system.
 3. Avoid hazards:
    - Bottomless Pit: Fatal if you fall in. You'll feel a draft if near.
    - Super-Bats: They pick you up and drop you in random rooms. You'll hear rustling near them.
