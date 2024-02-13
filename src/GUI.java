@@ -19,9 +19,9 @@ public class GUI extends JPanel{
     }
 
 @Override
-public void paintComponent(Graphics gg) {
-    super.paintComponent(gg);
-    Graphics2D g = (Graphics2D) gg;
+public void paintComponent(Graphics g1) {
+    super.paintComponent(g1);
+    Graphics2D g = (Graphics2D) g1;
     //make the edges of the shape smoother
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);

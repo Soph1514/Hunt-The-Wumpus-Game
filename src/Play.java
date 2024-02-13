@@ -120,13 +120,13 @@ public class Play {
             System.out.println("YOU FEEL A DRAFT");
         }
         //checking if bats are in neighbouring rooms
-        //method disjoint returns false of there is at least one common element in two lists
+        //method disjoint returns false if there is at least one common element in two lists
         if (!Collections.disjoint(neighbourRooms, hazard.getBatsLocation())) {
             System.out.println("YOU HEAR A RUSTLING");
         }
     }
 
-    public void shoot(int userInput){//user decides what room to shoot into.
+    public void shoot(int room){//user decides what room to shoot into.
         int arrowLocation = userInput;
         int wumpusLocation = hazard.getWumpusLocation();
 
