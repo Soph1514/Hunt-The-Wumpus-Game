@@ -144,7 +144,7 @@ public class Play {
                 //wumpus has a 75% chance of hearing the arrow and moving to a new room
                 Random random = new Random();
                 if(random.nextDouble() < 0.75){
-                    int index = random.nextInt(emptyRooms.size()-5);
+                    int index = random.nextInt(emptyRooms.size()-1);
                     int num = emptyRooms.get(index);
                     hazard.setWumpusLocation(num);
                     System.out.println("TINK! THE WUMPUS HEARD THE ARROW AND ESCAPED TO A NEW RANDOM ROOM.");
