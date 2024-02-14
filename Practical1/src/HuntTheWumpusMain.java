@@ -75,19 +75,6 @@ public class HuntTheWumpusMain {
                         default:
                             throw new InputMismatchException("INVALID COMMAND, PLEASE TRY AGAIN");
                     }
-                    // if (!play.getPlayerLife()) {
-                    // System.out.println("PLAY AGAIN? Y/N");
-                    // switch(reader.nextLine()) {
-                    // case "Y":
-                    // //breaks out of the inner loop but not the outer to restart the game
-                    // break;
-                    // case "N":
-                    // //terminate the game
-                    // System.exit(0);
-                    // default:
-                    // throw new InputMismatchException("INVALID COMMAND, PLEASE TYPE Y OR N");
-                    // }
-                    // }
                 } catch (InputMismatchException e) {
                     System.out.println(e.getMessage());
                 } catch (Exception e) {
